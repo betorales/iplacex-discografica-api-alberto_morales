@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class DiscoController {
     @Autowired
     private IDiscoRepository discoRepo;
+    
+    @Autowired
     private IArtistaRepository artistaRepo;
 
     // Añadir - POST
@@ -63,9 +65,9 @@ public class DiscoController {
         value = "/artista/{id}/discos",
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Disco> HandleGetDiscosByArtistaRequest(){
+    public ResponseEntity<List<Disco>> HandleGetDiscosByArtistaRequest(@PathVariable("id") String idArtista){
+        List<Disco> discos = discoRepo.findDiscosByIdArtista(idArtista);
 
-
-        return
+        return new ResponseEntity<>(discos, null, HttpStatus.OK);
     }
 }
